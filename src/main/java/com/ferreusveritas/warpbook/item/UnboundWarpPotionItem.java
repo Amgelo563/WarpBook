@@ -19,7 +19,6 @@ public class UnboundWarpPotionItem extends WarpPotionItem {
 	
 	public UnboundWarpPotionItem(String name) {
 		super(name);
-		setCreativeTab(WarpBookMod.tabBook);
 	}
 	
 	@Override

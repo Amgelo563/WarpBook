@@ -2,6 +2,7 @@ package com.ferreusveritas.warpbook.item;
 
 import java.util.List;
 
+import com.ferreusveritas.warpbook.WarpBookMod;
 import com.ferreusveritas.warpbook.core.IDeclareWarp;
 import com.ferreusveritas.warpbook.core.WarpColors;
 import com.ferreusveritas.warpbook.util.Waypoint;
@@ -26,6 +27,7 @@ public class WarpItem extends Item implements IDeclareWarp, IColorable {
 	public WarpItem(String name) {
 		setUnlocalizedName(name);
 		setRegistryName(name);
+		setCreativeTab(WarpBookMod.tabBook);
 	}
 	
 	public WarpItem setWarp(Warp warp) {

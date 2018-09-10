@@ -19,7 +19,6 @@ public class UnboundWarpPageItem extends WarpPageItem {
 
 	public UnboundWarpPageItem(String name) {
 		super(name);
-		setCreativeTab(WarpBookMod.tabBook);
 	}
 	
 	@Override
