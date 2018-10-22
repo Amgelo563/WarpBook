@@ -4,7 +4,6 @@ public enum WarpColors {
 	
 	UNBOUND(0xC3C36A, 0xC3C36A),//The default tawny color of a warp page
 	BOUND(0x098C76, 0x6CF4DC),//The color of an ender pearl
-	//0x9F1CE5 The original ugly purple player page
 	PLAYER(0x8e0000, 0xE13232),//Red color.. blood maybe?
 	HYPER(0x09AA38, 0x53FF41),//Hyper Green
 	DEATHLY(0x131313, 0x686868),//Near Black

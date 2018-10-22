@@ -27,9 +27,8 @@ public class WarpPageItem extends WarpItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack itemStack = player.getHeldItem(hand);
+		WarpBookMod.warpDrive.queueWarp(player, itemStack);
 		
-		WarpBookMod.warpDrive.handleWarp(player, itemStack);
-
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
 	}
 	

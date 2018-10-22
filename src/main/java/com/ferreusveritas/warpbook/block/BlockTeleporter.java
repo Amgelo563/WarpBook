@@ -70,8 +70,9 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (entityIn instanceof EntityPlayer) {
 			ItemStack page = ((TileEntityTeleporter)worldIn.getTileEntity(pos)).getWarpItem();
-			if (!page.isEmpty())
-				WarpBookMod.warpDrive.handleWarp((EntityPlayer)entityIn, page);
+			if (!page.isEmpty()) {
+				WarpBookMod.warpDrive.queueWarp((EntityPlayer)entityIn, page);
+			}
 		}
 	}
 	

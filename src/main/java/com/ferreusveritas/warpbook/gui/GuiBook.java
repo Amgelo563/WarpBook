@@ -145,8 +145,6 @@ public class GuiBook extends GuiScreen {
 			break;
 		default:
 			PacketWarp packet = new PacketWarp(guiButton.id);
-			ItemStack page = PacketWarp.getPageById(entityPlayer, guiButton.id);
-			WarpBookMod.warpDrive.handleWarp(Minecraft.getMinecraft().player, page);
 			WarpBookMod.network.sendToServer(packet);
 			mc.displayGuiScreen((GuiScreen)null);
 			break;

@@ -34,7 +34,7 @@ public class WarpPotionItem extends WarpItem {
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
 		
 		if(player instanceof EntityPlayer) {
-			WarpBookMod.warpDrive.handleWarp((EntityPlayer) player, stack);
+			WarpBookMod.warpDrive.queueWarp((EntityPlayer) player, stack);
 	        return new ItemStack(Items.GLASS_BOTTLE);
 		}
 		

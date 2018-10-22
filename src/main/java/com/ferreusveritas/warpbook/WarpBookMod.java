@@ -10,6 +10,7 @@ import com.ferreusveritas.warpbook.commands.DeleteWaypointCommand;
 import com.ferreusveritas.warpbook.commands.GiveWarpCommand;
 import com.ferreusveritas.warpbook.commands.ListWaypointCommand;
 import com.ferreusveritas.warpbook.core.WarpDrive;
+import com.ferreusveritas.warpbook.event.WarpEventHandler;
 import com.ferreusveritas.warpbook.gui.GuiManager;
 import com.ferreusveritas.warpbook.item.WarpBookItem;
 import com.ferreusveritas.warpbook.net.packet.PacketEffect;
@@ -115,6 +116,7 @@ public class WarpBookMod {
 	
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(WarpEventHandler.EVENT_HANDLER);
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager());
 		proxy.registerRenderers();
 	}
