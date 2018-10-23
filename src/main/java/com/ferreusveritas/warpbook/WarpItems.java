@@ -1,5 +1,7 @@
 package com.ferreusveritas.warpbook;
 
+import java.util.List;
+
 import com.ferreusveritas.warpbook.item.DeathlyWarpPageItem;
 import com.ferreusveritas.warpbook.item.LegacyWarpPageItem;
 import com.ferreusveritas.warpbook.item.UnboundWarpPageItem;
@@ -12,8 +14,11 @@ import com.ferreusveritas.warpbook.warps.WarpHyper;
 import com.ferreusveritas.warpbook.warps.WarpLocus;
 import com.ferreusveritas.warpbook.warps.WarpPlayer;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class WarpItems {
@@ -37,7 +42,9 @@ public class WarpItems {
 		
 		//Misc
 		warpBookItem = new WarpBookItem("warpbook");
-		warpClusterItem = new WarpItem("warpcluster");
+		warpClusterItem = new WarpItem("warpcluster") {
+			@Override public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) { }
+		};
 		
 		//Pages
 		unboundWarpPageItem = new UnboundWarpPageItem("unboundwarppage");
