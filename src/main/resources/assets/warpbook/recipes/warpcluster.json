@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"eee",
+		"ere",
+		"eee"
+	],
+	"key": {
+		"e": { "item": "minecraft:ender_pearl" },
+		"r": { "item": "minecraft:redstone" }
+	},
+	"result": {
+		"item": "warpbook:warpcluster"
+	}
+}

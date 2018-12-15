@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"sss",
+		"owo",
+		"ggg"
+	],
+	"key": {
+		"s": { "item": "minecraft:stone_slab", "data": 1 },
+		"o": { "item": "minecraft:obsidian" },
+		"w": { "item": "warpbook:warpcluster" },
+		"g": { "item": "minecraft:gold_ingot" }
+	},
+	"result": {
+		"item": "warpbook:bookcloner"
+	}
+}

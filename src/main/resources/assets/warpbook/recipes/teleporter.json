@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"qpq",
+		"ece",
+		"obo"
+	],
+	"key": {
+		"q": { "item": "minecraft:quartz" },
+		"p": { "item": "minecraft:stone_pressure_plate" },
+		"e": { "item": "minecraft:end_rod" },
+		"c": { "item": "warpbook:warpcluster" },
+		"o": { "item": "minecraft:obsidian" },
+		"b": { "item": "minecraft:glass_bottle" }
+	},
+	"result": {
+		"item": "warpbook:teleporter"
+	}
+}

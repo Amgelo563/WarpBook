@@ -6,7 +6,6 @@ import com.ferreusveritas.warpbook.item.WarpPageItem;
 import com.ferreusveritas.warpbook.item.WarpPotionItem;
 import com.ferreusveritas.warpbook.util.JavaUtils;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -19,18 +18,12 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreIngredient;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.RecipeSorter.Category;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class Crafting {
 	
 	public void register(IForgeRegistry<IRecipe> registry) {
-		
-		RecipeSorter.register("warpbook:shapeless_page", WarpPageShapeless.class, Category.SHAPELESS, "after:minecraft:shapeless");
-		RecipeSorter.register("warpbook:shapeless_dyewarpbook", WarpBookColorShapeless.class, Category.SHAPELESS, "after:minecraft:shapeless");
 		
 		PotionType awkward = PotionType.REGISTRY.getObject(new ResourceLocation("awkward"));
 		
@@ -39,82 +32,6 @@ public class Crafting {
 				PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), awkward),
 				new ItemStack(WarpBookMod.items.warpClusterItem), //Warp Cluster
 				new ItemStack(WarpBookMod.items.unboundWarpPotionItem));
-		
-		//Recipe for unbound warp book
-		GameRegistry.addShapelessRecipe(
-			new ResourceLocation(Properties.modid, "unboundWarpPage"),//Name
-			null,//Group
-			new ItemStack(WarpBookMod.items.unboundWarpPageItem, 1),//Output
-			new Ingredient[] {
-				Ingredient.fromStacks(new ItemStack(Items.PAPER, 1)),
-				Ingredient.fromStacks(new ItemStack(WarpBookMod.items.unboundWarpPotionItem))
-			}
-		);
-		
-		//Recipe for warp book
-		GameRegistry.addShapelessRecipe(
-			new ResourceLocation(Properties.modid, "warpBook"),//Name
-			null,//Group
-			new ItemStack(WarpBookMod.items.warpBookItem, 1),//Output
-			new Ingredient[] {
-				Ingredient.fromStacks(new ItemStack(Items.ENDER_PEARL, 1)),
-				Ingredient.fromStacks(new ItemStack(Items.BOOK, 1))
-			}
-		);
-		
-		//Recipe for deathly warp page
-		GameRegistry.addShapedRecipe(
-			new ResourceLocation(Properties.modid, "deathlyWarpPage"),//Name
-			null,//Group
-			new ItemStack(WarpBookMod.items.deathlyWarpPageItem),//Output
-			" f ",
-			"dud",
-			'u', new ItemStack(WarpBookMod.items.unboundWarpPageItem),
-			'd', new ItemStack(Items.DIAMOND),
-			'f', new ItemStack(Items.FERMENTED_SPIDER_EYE)
-		);
-		
-		//Recipe for warp cluster
-		GameRegistry.addShapedRecipe(
-			new ResourceLocation(Properties.modid, "warpCluster"),//Name
-			null,//Group
-			new ItemStack(WarpBookMod.items.warpClusterItem),//Output
-			"eee",
-			"ere",
-			"eee",
-			'e', new ItemStack(Items.ENDER_PEARL),
-			'r', new ItemStack(Items.REDSTONE)
-		);
-		
-		//Recipe for book cloner
-		GameRegistry.addShapedRecipe(
-			new ResourceLocation(Properties.modid, "bookCloner"),//Name
-			null,//Group
-			new ItemStack(WarpBookMod.blocks.bookCloner, 1),//Output
-			"sss",
-			"owo",
-			"ggg",
-			's', new ItemStack(Blocks.STONE_SLAB, 1, 1),
-			'o', new ItemStack(Blocks.OBSIDIAN),
-			'w', new ItemStack(WarpBookMod.items.warpClusterItem),
-			'g', new ItemStack(Items.GOLD_INGOT)
-		);
-		
-		//Recipe for teleporter
-		GameRegistry.addShapedRecipe(
-			new ResourceLocation(Properties.modid, "teleporter"),//Name
-			null,//Group
-			new ItemStack(WarpBookMod.blocks.teleporter, 1),//Output
-			"qpq",
-			"ece",
-			"obo",
-			'q', new ItemStack(Items.QUARTZ),
-			'p', new ItemStack(Blocks.STONE_PRESSURE_PLATE),
-			'e', new ItemStack(Blocks.END_ROD),
-			'c', new ItemStack(WarpBookMod.items.warpClusterItem),
-			'o', new ItemStack(Blocks.OBSIDIAN),
-			'b', new ItemStack(Items.GLASS_BOTTLE)
-		);
 		
 		//Recipe to copy bound warp page to an unbound page
 		copyPageToUnboundPage(registry, (WarpPageItem) WarpBookMod.items.locusWarpPageItem);
