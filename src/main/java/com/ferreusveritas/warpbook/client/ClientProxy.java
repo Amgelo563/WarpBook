@@ -1,7 +1,7 @@
 package com.ferreusveritas.warpbook.client;
 
 import com.ferreusveritas.warpbook.Proxy;
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.item.IColorable;
 
 import net.minecraft.block.Block;
@@ -24,36 +24,36 @@ public class ClientProxy extends Proxy {
 	public void registerRenderers() {
 				
 		//Misc
-		regMesh(WarpBookMod.items.warpBookItem);
-		regMesh(WarpBookMod.items.warpClusterItem);
+		regMesh(WarpBook.items.warpBookItem);
+		regMesh(WarpBook.items.warpClusterItem);
 
 		//Pages
-		regMesh(WarpBookMod.items.unboundWarpPageItem);
-		regMesh(WarpBookMod.items.locusWarpPageItem);
-		regMesh(WarpBookMod.items.playerWarpPageItem);
-		regMesh(WarpBookMod.items.hyperWarpPageItem);
-		regMesh(WarpBookMod.items.deathlyWarpPageItem);
+		regMesh(WarpBook.items.unboundWarpPageItem);
+		regMesh(WarpBook.items.locusWarpPageItem);
+		regMesh(WarpBook.items.playerWarpPageItem);
+		regMesh(WarpBook.items.hyperWarpPageItem);
+		regMesh(WarpBook.items.deathlyWarpPageItem);
 		for(int i = 0; i < 6; i++) {
-			regMesh(WarpBookMod.items.legacyPageItem, i);
+			regMesh(WarpBook.items.legacyPageItem, i);
 		}
 
 		//Potions
-		regMesh(WarpBookMod.items.unboundWarpPotionItem);
-		regMesh(WarpBookMod.items.locusWarpPotionItem);
-		regMesh(WarpBookMod.items.playerWarpPotionItem);
-		regMesh(WarpBookMod.items.hyperWarpPotionItem);		
+		regMesh(WarpBook.items.unboundWarpPotionItem);
+		regMesh(WarpBook.items.locusWarpPotionItem);
+		regMesh(WarpBook.items.playerWarpPotionItem);
+		regMesh(WarpBook.items.hyperWarpPotionItem);		
 		
-		regMesh(Item.getItemFromBlock(WarpBookMod.blocks.bookCloner));
-		regMesh(Item.getItemFromBlock(WarpBookMod.blocks.teleporter));
+		regMesh(Item.getItemFromBlock(WarpBook.blocks.bookCloner));
+		regMesh(Item.getItemFromBlock(WarpBook.blocks.teleporter));
 	
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(
 				new IBlockColor() {
 					@Override
 					public int colorMultiplier(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex) {
-						return WarpBookMod.blocks.teleporter.getColor(state, access, pos, tintIndex);
+						return WarpBook.blocks.teleporter.getColor(state, access, pos, tintIndex);
 					}
 				}
-				, new Block[] {WarpBookMod.blocks.teleporter}
+				, new Block[] {WarpBook.blocks.teleporter}
 			);
 	}
 	

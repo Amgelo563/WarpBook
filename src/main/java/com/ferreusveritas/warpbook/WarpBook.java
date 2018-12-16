@@ -49,20 +49,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod(modid = Properties.modid, name = Properties.name, version = Properties.version)
-public class WarpBookMod {
-	@Mod.Instance(value = Properties.modid)
-	public static WarpBookMod instance;
+@Mod(modid = ModConstants.MODID, name = ModConstants.NAME, version = ModConstants.VERSION)
+public class WarpBook {
+	@Mod.Instance(value = ModConstants.MODID)
+	public static WarpBook instance;
 	
-	public static final Logger logger = LogManager.getLogger(Properties.modid);
-	public static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(Properties.modid);
+	public static final Logger logger = LogManager.getLogger(ModConstants.MODID);
+	public static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(ModConstants.MODID);
 	
 	@SidedProxy(clientSide = "com.ferreusveritas.warpbook.client.ClientProxy", serverSide = "com.ferreusveritas.warpbook.Proxy")
 	public static Proxy proxy;
 	
 	public static WarpDrive warpDrive = new WarpDrive();
-	public static WarpItems items;
-	public static WarpBlocks blocks;
+	public static ModItems items;
+	public static ModBlocks blocks;
 	public static Crafting crafting;
 	
 	private static int guiIndex = 42;
@@ -108,8 +108,8 @@ public class WarpBookMod {
 			disabledLeaving[i] = disabledLeavingP[i];
 		}
 		
-		items = new WarpItems();
-		blocks = new WarpBlocks();
+		items = new ModItems();
+		blocks = new ModBlocks();
 		crafting = new Crafting();
 		config.save();
 	}
@@ -143,7 +143,7 @@ public class WarpBookMod {
 	
 	@SubscribeEvent
 	public void onHurt(LivingHurtEvent event) {
-		if (WarpBookMod.deathPagesEnabled && event.getEntity() instanceof EntityPlayer) {
+		if (WarpBook.deathPagesEnabled && event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)event.getEntity();
 			if (event.getSource() != DamageSource.OUT_OF_WORLD && player.getHealth() <= event.getAmount()) {
 				for (ItemStack item : player.inventory.mainInventory) {
@@ -161,7 +161,7 @@ public class WarpBookMod {
 	
 	@SubscribeEvent
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		if (WarpBookMod.deathPagesEnabled) {
+		if (WarpBook.deathPagesEnabled) {
 			WarpWorldStorage s = WarpWorldStorage.get(event.player.world);
 			Waypoint death = s.getLastDeath(event.player.getGameProfile().getId());
 			if (death != null) {
@@ -178,7 +178,7 @@ public class WarpBookMod {
 	// REGISTRATION
 	///////////////////////////////////////////
 	
-	@Mod.EventBusSubscriber(modid = Properties.modid)
+	@Mod.EventBusSubscriber(modid = ModConstants.MODID)
 	public static class RegistrationHandler {
 		
 		@SubscribeEvent

@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import org.lwjgl.input.Keyboard;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.net.packet.PacketWaypointName;
 
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,7 +52,7 @@ public class GuiWaypointName extends GuiScreen {
 		if(par1GuiButton == doneButton) {
 			if (par1GuiButton.enabled) {
 				PacketWaypointName packet = new PacketWaypointName(waypointName.getText());
-				WarpBookMod.network.sendToServer(packet);
+				WarpBook.network.sendToServer(packet);
 			
 			}
 		}

@@ -104,7 +104,7 @@ public class WarpWorldStorage extends WorldSavedData {
 	}
 	
 	void updateClient(EntityPlayerMP player, ServerConnectionFromClientEvent e) {
-		FMLEmbeddedChannel channel = NetworkRegistry.INSTANCE.getChannel(Properties.modid, Side.SERVER);
+		FMLEmbeddedChannel channel = NetworkRegistry.INSTANCE.getChannel(ModConstants.MODID, Side.SERVER);
 		channel.attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.DISPATCHER);
 		channel.attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(NetworkDispatcher.get(e.getManager()));
 		channel.writeAndFlush(new PacketSyncWaypoints(table)).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);

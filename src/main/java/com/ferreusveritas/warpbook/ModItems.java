@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class WarpItems {
+public class ModItems {
 	
 	public WarpBookItem warpBookItem;
 	public Item warpClusterItem;
@@ -38,7 +38,7 @@ public class WarpItems {
 	public WarpItem playerWarpPotionItem;
 	public WarpItem hyperWarpPotionItem;
 	
-	public WarpItems() {
+	public ModItems() {
 		
 		//Misc
 		warpBookItem = new WarpBookItem("warpbook");
@@ -81,12 +81,12 @@ public class WarpItems {
 		registry.register(playerWarpPotionItem);
 		registry.register(hyperWarpPotionItem);
 		
-		ItemBlock itemBlock = new ItemBlock(WarpBookMod.blocks.bookCloner);
-		itemBlock.setRegistryName(WarpBookMod.blocks.bookCloner.getRegistryName());
+		ItemBlock itemBlock = new ItemBlock(WarpBook.blocks.bookCloner);
+		itemBlock.setRegistryName(WarpBook.blocks.bookCloner.getRegistryName());
 		registry.register(itemBlock);
 		
-		itemBlock = new ItemBlock(WarpBookMod.blocks.teleporter);
-		itemBlock.setRegistryName(WarpBookMod.blocks.teleporter.getRegistryName());
+		itemBlock = new ItemBlock(WarpBook.blocks.teleporter);
+		itemBlock.setRegistryName(WarpBook.blocks.teleporter.getRegistryName());
 		registry.register(itemBlock);
 	}
 	

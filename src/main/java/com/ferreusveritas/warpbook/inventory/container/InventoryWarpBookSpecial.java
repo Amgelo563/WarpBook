@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.inventory.container;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.item.LegacyWarpPageItem;
 import com.ferreusveritas.warpbook.item.WarpBookItem;
 
@@ -15,7 +15,7 @@ public class InventoryWarpBookSpecial implements IInventory {
 	
 	public InventoryWarpBookSpecial(ItemStack heldItem) {
 		int deaths = WarpBookItem.getRespawnsLeft(heldItem); 
-		deathly = deaths == 0 ? ItemStack.EMPTY : new ItemStack(WarpBookMod.items.deathlyWarpPageItem, deaths);
+		deathly = deaths == 0 ? ItemStack.EMPTY : new ItemStack(WarpBook.items.deathlyWarpPageItem, deaths);
 		this.heldItem = heldItem;
 	}
 	

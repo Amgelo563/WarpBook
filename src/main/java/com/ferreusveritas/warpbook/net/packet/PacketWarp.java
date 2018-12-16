@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.net.packet;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.util.net.NetUtils;
 
 import io.netty.buffer.ByteBuf;
@@ -24,7 +24,7 @@ public class PacketWarp implements IMessage, IMessageHandler<PacketWarp, IMessag
 	
 	public static ItemStack getPageById(EntityPlayer player, int pageSlot) {
 		try {
-			NBTTagList stack = WarpBookMod.lastHeldBooks.get(player).getTagCompound().getTagList("WarpPages", Constants.NBT.TAG_COMPOUND);
+			NBTTagList stack = WarpBook.lastHeldBooks.get(player).getTagCompound().getTagList("WarpPages", Constants.NBT.TAG_COMPOUND);
 			ItemStack page = new ItemStack(stack.getCompoundTagAt(pageSlot));
 			return page;
 		}
@@ -37,7 +37,7 @@ public class PacketWarp implements IMessage, IMessageHandler<PacketWarp, IMessag
 	public IMessage onMessage(PacketWarp message, MessageContext ctx) {
 		EntityPlayer player = NetUtils.getPlayerFromContext(ctx);
 		ItemStack page = getPageById(player, message.pageSlot);
-		WarpBookMod.warpDrive.queueWarp(player, page);
+		WarpBook.warpDrive.queueWarp(player, page);
 		
 		return null;
 	}

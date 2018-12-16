@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.commands;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.WarpWorldStorage;
 import com.ferreusveritas.warpbook.util.CommandUtils;
 import com.ferreusveritas.warpbook.util.CommandUtils.ChatType;
@@ -62,7 +62,7 @@ public class GiveWarpCommand extends CommandBase {
 			CommandUtils.showError(sender, String.format(I18n.translateToLocal("help.waypointdoesnotexist").trim(), name));
 			return;
 		}
-		ItemStack hyperStack = new ItemStack(WarpBookMod.items.hyperWarpPotionItem);
+		ItemStack hyperStack = new ItemStack(WarpBook.items.hyperWarpPotionItem);
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("hypername", name);
 		hyperStack.setTagCompound(compound);

@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.item;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,7 +34,7 @@ public class WarpPotionItem extends WarpItem {
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
 		
 		if(player instanceof EntityPlayer) {
-			WarpBookMod.warpDrive.queueWarp((EntityPlayer) player, stack);
+			WarpBook.warpDrive.queueWarp((EntityPlayer) player, stack);
 	        return new ItemStack(Items.GLASS_BOTTLE);
 		}
 		

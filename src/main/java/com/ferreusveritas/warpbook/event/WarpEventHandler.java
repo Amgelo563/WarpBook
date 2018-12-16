@@ -1,7 +1,7 @@
 package com.ferreusveritas.warpbook.event;
 
-import com.ferreusveritas.warpbook.Properties;
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.ModConstants;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.util.Waypoint;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,12 +18,12 @@ public class WarpEventHandler {
 	@SubscribeEvent
 	public void onTickPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.side.isServer() && event.phase == TickEvent.Phase.START) {
-			if (event.player.getEntityData().hasKey(Properties.modid)) {
+			if (event.player.getEntityData().hasKey(ModConstants.MODID)) {
 				EntityPlayerMP player = (EntityPlayerMP) event.player;
-				NBTTagCompound data = event.player.getEntityData().getCompoundTag(Properties.modid);
+				NBTTagCompound data = event.player.getEntityData().getCompoundTag(ModConstants.MODID);
 				Waypoint wp = new Waypoint(data);
-				WarpBookMod.warpDrive.processWarp(player, wp);
-				event.player.getEntityData().removeTag(Properties.modid);
+				WarpBook.warpDrive.processWarp(player, wp);
+				event.player.getEntityData().removeTag(ModConstants.MODID);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.item;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.core.WarpColors;
 
 import net.minecraft.item.Item;
@@ -13,7 +13,7 @@ public class DeathlyWarpPageItem extends Item implements IColorable {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setMaxStackSize(16);
-		setCreativeTab(WarpBookMod.tabBook);
+		setCreativeTab(WarpBook.tabBook);
 	}
 	
 	@Override

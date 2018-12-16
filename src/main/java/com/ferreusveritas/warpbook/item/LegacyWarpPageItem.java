@@ -2,7 +2,7 @@ package com.ferreusveritas.warpbook.item;
 
 import java.util.List;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -33,19 +33,19 @@ public class LegacyWarpPageItem extends WarpPageItem {
 		switch (itemStack.getItemDamage()) {
 			default:
 			case 0:
-				newStack = new ItemStack(WarpBookMod.items.unboundWarpPageItem, itemStack.getCount());
+				newStack = new ItemStack(WarpBook.items.unboundWarpPageItem, itemStack.getCount());
 				break;
 			case 1:
-				newStack = new ItemStack(WarpBookMod.items.locusWarpPageItem, itemStack.getCount());
+				newStack = new ItemStack(WarpBook.items.locusWarpPageItem, itemStack.getCount());
 				break;
 			case 2:
-				newStack = new ItemStack(WarpBookMod.items.hyperWarpPageItem, itemStack.getCount());
+				newStack = new ItemStack(WarpBook.items.hyperWarpPageItem, itemStack.getCount());
 				break;
 			case 3:
-				newStack = new ItemStack(WarpBookMod.items.deathlyWarpPageItem, itemStack.getCount());
+				newStack = new ItemStack(WarpBook.items.deathlyWarpPageItem, itemStack.getCount());
 				break;
 			case 5:
-				newStack = new ItemStack(WarpBookMod.items.playerWarpPageItem, itemStack.getCount());
+				newStack = new ItemStack(WarpBook.items.playerWarpPageItem, itemStack.getCount());
 				break;
 		}
 		if (itemStack.hasTagCompound()) {

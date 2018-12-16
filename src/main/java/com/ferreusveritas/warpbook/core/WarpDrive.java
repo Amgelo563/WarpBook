@@ -3,8 +3,8 @@ package com.ferreusveritas.warpbook.core;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
-import com.ferreusveritas.warpbook.Properties;
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.ModConstants;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.net.packet.PacketEffect;
 import com.ferreusveritas.warpbook.util.CommandUtils;
 import com.ferreusveritas.warpbook.util.MathUtils;
@@ -30,22 +30,22 @@ public class WarpDrive {
 				CommandUtils.showError(player, I18n.format("help.waypointnotexist"));
 			}
 			
-			if (player.getEntityData().hasKey(Properties.modid)) {
+			if (player.getEntityData().hasKey(ModConstants.MODID)) {
 				return false;
 			}
 			
-			if (Arrays.asList(WarpBookMod.disabledDestinations).contains(new Integer(wp.dim))) {
+			if (Arrays.asList(WarpBook.disabledDestinations).contains(new Integer(wp.dim))) {
 				CommandUtils.showError(player, I18n.format("help.cantgoto"));
 				return false;
 			}
-			if (Arrays.asList(WarpBookMod.disabledLeaving).contains(new Integer(player.dimension))) {
+			if (Arrays.asList(WarpBook.disabledLeaving).contains(new Integer(player.dimension))) {
 				CommandUtils.showError(player, I18n.format("help.cantleave"));
 				return false;
 			}
 			
 			NBTTagCompound wpData = new NBTTagCompound();
 			wp.writeToNBT(wpData);
-			player.getEntityData().setTag(Properties.modid, wpData);
+			player.getEntityData().setTag(ModConstants.MODID, wpData);
 			
 		}
 		
@@ -80,12 +80,12 @@ public class WarpDrive {
 		}
 		
 		//Update player
-		player.addExhaustion(calculateExhaustion(player.getEntityWorld().getDifficulty(), WarpBookMod.exhaustionCoefficient, crossDim));
+		player.addExhaustion(calculateExhaustion(player.getEntityWorld().getDifficulty(), WarpBook.exhaustionCoefficient, crossDim));
 		player.setPositionAndUpdate(wp.x + 0.5, wp.y + 0.5, wp.z + 0.5);
 
 		//Send effect packets
-		WarpBookMod.network.sendToAllAround(oldDim, oldPoint);
-		WarpBookMod.network.sendToAllAround(newDim, newPoint);
+		WarpBook.network.sendToAllAround(oldDim, oldPoint);
+		WarpBook.network.sendToAllAround(newDim, newPoint);
 	}
 
 	private static float calculateExhaustion(EnumDifficulty difficultySetting, float exhaustionCoefficient, boolean crossDim) {

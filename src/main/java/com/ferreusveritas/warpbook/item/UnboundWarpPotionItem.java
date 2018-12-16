@@ -2,7 +2,7 @@ package com.ferreusveritas.warpbook.item;
 
 import java.util.List;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.util.WarpUtils;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,10 +26,10 @@ public class UnboundWarpPotionItem extends WarpPotionItem {
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (player.isSneaking()) {
-			stack = WarpUtils.bindItemStackToPlayer(new ItemStack(WarpBookMod.items.playerWarpPotionItem, stack.getCount()), player);
+			stack = WarpUtils.bindItemStackToPlayer(new ItemStack(WarpBook.items.playerWarpPotionItem, stack.getCount()), player);
 		}
 		else {
-			WarpUtils.bindItemStackToLocation(new ItemStack(WarpBookMod.items.locusWarpPotionItem), world, player);
+			WarpUtils.bindItemStackToLocation(new ItemStack(WarpBook.items.locusWarpPotionItem), world, player);
 		}
 		
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.inventory.container;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.inventory.InventoryWarpBook;
 import com.ferreusveritas.warpbook.inventory.SlotWarpBook;
 import com.ferreusveritas.warpbook.inventory.SlotWarpBookDeathly;
@@ -31,7 +31,7 @@ public class ContainerWarpBook extends Container {
 			this.addSlotToContainer(new SlotWarpBookInventory(inventoryPlayer, i, 8 + i * 18, 198));
 		}
 		
-		if (WarpBookMod.deathPagesEnabled) {
+		if (WarpBook.deathPagesEnabled) {
 			this.addSlotToContainer(new SlotWarpBookDeathly(inventorySpecial, 0, 174, 72));
 		}
 	}

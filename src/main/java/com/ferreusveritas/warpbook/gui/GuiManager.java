@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.gui;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.inventory.InventoryBookCloner;
 import com.ferreusveritas.warpbook.inventory.InventoryWarpBook;
 import com.ferreusveritas.warpbook.inventory.container.ContainerBookCloner;
@@ -17,11 +17,11 @@ public class GuiManager implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
-		if (ID == WarpBookMod.WarpBookInventoryGuiIndex) {
+		if (ID == WarpBook.WarpBookInventoryGuiIndex) {
 			return new ContainerWarpBook(player, player.inventory,
 					new InventoryWarpBook(player.getHeldItemMainhand()), new InventoryWarpBookSpecial(player.getHeldItemMainhand()));
 		}
-		if (ID == WarpBookMod.BookClonerInventoryGuiIndex) {
+		if (ID == WarpBook.BookClonerInventoryGuiIndex) {
 			return new ContainerBookCloner(player, player.inventory,
 					new InventoryBookCloner((TileEntityBookCloner)world.getTileEntity(new BlockPos(x, y, z))));
 		}
@@ -30,18 +30,18 @@ public class GuiManager implements IGuiHandler {
 	
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if (ID == WarpBookMod.WarpBookWarpGuiIndex) {
+		if (ID == WarpBook.WarpBookWarpGuiIndex) {
 			return new GuiBook(player);
 		}
-		if (ID == WarpBookMod.WarpBookInventoryGuiIndex) {
+		if (ID == WarpBook.WarpBookInventoryGuiIndex) {
 			return new GuiWarpBookItemInventory(new ContainerWarpBook(player, player.inventory,
 					new InventoryWarpBook(player.getHeldItemMainhand()),
 					new InventoryWarpBookSpecial(player.getHeldItemMainhand())));
 		}
-		if (ID == WarpBookMod.WarpBookWaypointGuiIndex) {
+		if (ID == WarpBook.WarpBookWaypointGuiIndex) {
 			return new GuiWaypointName(player);
 		}
-		if (ID == WarpBookMod.BookClonerInventoryGuiIndex) {
+		if (ID == WarpBook.BookClonerInventoryGuiIndex) {
 			return new GuiBookCloner(new ContainerBookCloner(player, player.inventory,
 					new InventoryBookCloner((TileEntityBookCloner)
 							world.getTileEntity(new BlockPos(x, y, z)))));

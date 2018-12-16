@@ -6,21 +6,22 @@ import com.ferreusveritas.warpbook.tileentity.TileEntityBookCloner;
 import com.ferreusveritas.warpbook.tileentity.TileEntityTeleporter;
 
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class WarpBlocks {
+public class ModBlocks {
 	public BlockBookCloner bookCloner;
 	public BlockTeleporter teleporter;
 	
-	public WarpBlocks() {
+	public ModBlocks() {
 		bookCloner = new BlockBookCloner();
 		teleporter = new BlockTeleporter();
 	}
 	
 	public void register(IForgeRegistry<Block> registry) {
-		GameRegistry.registerTileEntity(TileEntityBookCloner.class, "tileEntityBookCloner");
-		GameRegistry.registerTileEntity(TileEntityTeleporter.class, "tileEntityTeleporter");
+		GameRegistry.registerTileEntity(TileEntityBookCloner.class, new ResourceLocation(ModConstants.MODID, "tileEntityBookCloner"));
+		GameRegistry.registerTileEntity(TileEntityTeleporter.class, new ResourceLocation(ModConstants.MODID, "tileEntityTeleporter"));
 		
 		registry.register(bookCloner);
 		registry.register(teleporter);

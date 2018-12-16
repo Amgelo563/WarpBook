@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.block;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.tileentity.TileEntityBookCloner;
 import com.ferreusveritas.warpbook.util.WorldUtils;
 
@@ -28,7 +28,7 @@ public class BlockBookCloner extends BlockContainer {
 		super(Material.IRON);
 		setUnlocalizedName("bookcloner");
 		setRegistryName("bookcloner");
-		setCreativeTab(WarpBookMod.tabBook);
+		setCreativeTab(WarpBook.tabBook);
 		setSoundType(SoundType.STONE);
 		setHardness(10.0f);
 		setResistance(20.0f);
@@ -42,7 +42,7 @@ public class BlockBookCloner extends BlockContainer {
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		player.openGui(WarpBookMod.instance, WarpBookMod.BookClonerInventoryGuiIndex, world, pos.getX(), pos.getY(), pos.getZ());
+		player.openGui(WarpBook.instance, WarpBook.BookClonerInventoryGuiIndex, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 

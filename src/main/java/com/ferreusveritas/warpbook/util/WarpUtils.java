@@ -2,7 +2,7 @@ package com.ferreusveritas.warpbook.util;
 
 import java.math.RoundingMode;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,8 +19,8 @@ public class WarpUtils {
 				MathUtils.round(player.posY, RoundingMode.HALF_DOWN),
 				MathUtils.round(player.posZ, RoundingMode.HALF_DOWN),
 				player.dimension);
-		player.openGui(WarpBookMod.instance, WarpBookMod.WarpBookWaypointGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-		WarpBookMod.formingPages.put(player, stack);
+		player.openGui(WarpBook.instance, WarpBook.WarpBookWaypointGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		WarpBook.formingPages.put(player, stack);
 		return stack;
 	}
 	

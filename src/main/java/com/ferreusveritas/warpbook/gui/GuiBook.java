@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.ferreusveritas.warpbook.Properties;
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.ModConstants;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.core.IDeclareWarp;
 import com.ferreusveritas.warpbook.net.packet.PacketWarp;
 import com.ferreusveritas.warpbook.util.CommandUtils;
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiBook extends GuiScreen {
 	private final EntityPlayer entityPlayer;
 	private NBTTagList items;
-	private static final ResourceLocation invBg = new ResourceLocation(Properties.modid, "textures/gui/book.png");
+	private static final ResourceLocation invBg = new ResourceLocation(ModConstants.MODID, "textures/gui/book.png");
 	private int xSize, ySize, page, pageCount;
 	private GuiButton next, prev;
 	private ArrayList<WarpButton> warps;
@@ -145,7 +145,7 @@ public class GuiBook extends GuiScreen {
 			break;
 		default:
 			PacketWarp packet = new PacketWarp(guiButton.id);
-			WarpBookMod.network.sendToServer(packet);
+			WarpBook.network.sendToServer(packet);
 			mc.displayGuiScreen((GuiScreen)null);
 			break;
 		}

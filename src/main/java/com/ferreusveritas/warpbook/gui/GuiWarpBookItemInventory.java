@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.inventory.InventoryWarpBook;
 import com.ferreusveritas.warpbook.inventory.container.ContainerWarpBook;
 
@@ -44,7 +44,7 @@ public class GuiWarpBookItemInventory extends GuiContainer {
 		int k = (width - xSize) / 2;
 		int l = (height - ySize) / 2;
 		drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
-		if (WarpBookMod.deathPagesEnabled) {
+		if (WarpBook.deathPagesEnabled) {
 			mc.getTextureManager().bindTexture(deathBox);
 			drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 		}

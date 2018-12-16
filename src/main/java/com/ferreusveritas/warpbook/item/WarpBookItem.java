@@ -2,7 +2,7 @@ package com.ferreusveritas.warpbook.item;
 
 import java.util.List;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.core.IDeclareWarp;
 import com.ferreusveritas.warpbook.core.WarpColors;
 
@@ -27,7 +27,7 @@ public class WarpBookItem extends Item implements IColorable {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setMaxStackSize(1);
-		setCreativeTab(WarpBookMod.tabBook);
+		setCreativeTab(WarpBook.tabBook);
 		setMaxDamage(0);
 	}
 	
@@ -40,12 +40,12 @@ public class WarpBookItem extends Item implements IColorable {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack itemStack = player.getHeldItem(hand);
 		
-		WarpBookMod.lastHeldBooks.put(player, itemStack);
+		WarpBook.lastHeldBooks.put(player, itemStack);
 		if (player.isSneaking()) {
-			player.openGui(WarpBookMod.instance, WarpBookMod.WarpBookInventoryGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			player.openGui(WarpBook.instance, WarpBook.WarpBookInventoryGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		}
 		else {
-			player.openGui(WarpBookMod.instance, WarpBookMod.WarpBookWarpGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			player.openGui(WarpBook.instance, WarpBook.WarpBookWarpGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		}
 		
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
@@ -103,7 +103,7 @@ public class WarpBookItem extends Item implements IColorable {
 	
 	public static ItemStack copyBook(World world, ItemStack book) {
 		
-		ItemStack stack = new ItemStack(WarpBookMod.items.warpBookItem, 1);
+		ItemStack stack = new ItemStack(WarpBook.items.warpBookItem, 1);
 		NBTTagList pages = book.getTagCompound().getTagList("WarpPages", Constants.NBT.TAG_COMPOUND);
 		NBTTagList destPages = new NBTTagList();
 		for (int i = 0; i < pages.tagCount(); ++i) {

@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.item;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.core.WarpColors;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +27,7 @@ public class WarpPageItem extends WarpItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack itemStack = player.getHeldItem(hand);
-		WarpBookMod.warpDrive.queueWarp(player, itemStack);
+		WarpBook.warpDrive.queueWarp(player, itemStack);
 		
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
 	}

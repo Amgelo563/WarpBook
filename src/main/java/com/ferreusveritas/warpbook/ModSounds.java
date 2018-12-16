@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder("warpbook")
 @Mod.EventBusSubscriber(modid = "warpbook")
-public class WarpSounds
+public class ModSounds
 {
   @ObjectHolder("depart")
   public static final SoundEvent departSound = null;

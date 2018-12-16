@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.block;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.core.WarpColors;
 import com.ferreusveritas.warpbook.item.WarpPotionItem;
 import com.ferreusveritas.warpbook.tileentity.TileEntityTeleporter;
@@ -33,7 +33,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		super(Material.IRON);
 		setUnlocalizedName("teleporter");
 		setRegistryName("teleporter");
-		setCreativeTab(WarpBookMod.tabBook);
+		setCreativeTab(WarpBook.tabBook);
 		setSoundType(SoundType.STONE);
 		setHardness(10.0f);
 		setResistance(20.0f);
@@ -71,7 +71,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		if (entityIn instanceof EntityPlayer) {
 			ItemStack page = ((TileEntityTeleporter)worldIn.getTileEntity(pos)).getWarpItem();
 			if (!page.isEmpty()) {
-				WarpBookMod.warpDrive.queueWarp((EntityPlayer)entityIn, page);
+				WarpBook.warpDrive.queueWarp((EntityPlayer)entityIn, page);
 			}
 		}
 	}

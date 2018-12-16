@@ -1,6 +1,6 @@
 package com.ferreusveritas.warpbook.net.packet;
 
-import com.ferreusveritas.warpbook.WarpBookMod;
+import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.util.net.NetUtils;
 
 import io.netty.buffer.ByteBuf;
@@ -28,7 +28,7 @@ public class PacketWaypointName implements IMessage, IMessageHandler<PacketWaypo
 		if (player.getHeldItemMainhand().isEmpty()) {
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
 		}
-		ItemStack newPage = WarpBookMod.formingPages.get(player);
+		ItemStack newPage = WarpBook.formingPages.get(player);
 		newPage.getTagCompound().setString("name", message.name);
 		EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, newPage);
 		player.world.spawnEntity(item);
