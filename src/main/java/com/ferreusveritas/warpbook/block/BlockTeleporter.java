@@ -68,7 +68,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 	
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if (entityIn instanceof EntityPlayer) {
+		if (entityIn instanceof EntityPlayer && !worldIn.isBlockPowered(pos) ) {
 			ItemStack page = ((TileEntityTeleporter)worldIn.getTileEntity(pos)).getWarpItem();
 			if (!page.isEmpty()) {
 				WarpBook.warpDrive.queueWarp((EntityPlayer)entityIn, page);
@@ -99,8 +99,10 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 	@Override
     @SideOnly(Side.CLIENT)
 	public int getColor(IBlockState state, IBlockAccess world, BlockPos pos, int tintIndex) {
-		TileEntityTeleporter teleporter = (TileEntityTeleporter)world.getTileEntity(pos);
-		if(teleporter instanceof TileEntityTeleporter) {
+		
+		TileEntity tile = world.getTileEntity(pos);
+		if(tile instanceof TileEntityTeleporter) {
+		TileEntityTeleporter teleporter = (TileEntityTeleporter)tile;
 			WarpColors wc = teleporter.getWarpColor();
 
 			if(wc == WarpColors.UNBOUND) {
