@@ -3,16 +3,14 @@ package com.ferreusveritas.warpbook;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
 
 import com.ferreusveritas.warpbook.net.packet.PacketSyncWaypoints;
 import com.ferreusveritas.warpbook.util.MathUtils;
 import com.ferreusveritas.warpbook.util.Waypoint;
 
-import java.util.Set;
-import java.util.UUID;
-
 import io.netty.channel.ChannelFutureListener;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

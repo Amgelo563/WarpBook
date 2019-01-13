@@ -137,7 +137,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		ItemStack stack = new ItemStack(this, 1, 0);
 		NBTTagCompound tag = getNBT(stack);
 		
-		ItemStack warpItem = getWarpItem(access, pos);
+		ItemStack warpItem = getWarpItemStack(access, pos);
 		if(!warpItem.isEmpty()) {
 			NBTTagCompound warpTag = warpItem.serializeNBT();
 			if(warpTag != null) {
@@ -157,7 +157,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 	protected ItemStack getWarpEncodedItemStack(IBlockAccess access, BlockPos pos) {
 		ItemStack stack = new ItemStack(this, 1, 0);
 		
-		ItemStack warpItem = getWarpItem(access, pos);
+		ItemStack warpItem = getWarpItemStack(access, pos);
 		if(!warpItem.isEmpty()) {
 			NBTTagCompound warpTag = warpItem.serializeNBT();
 			if(warpTag != null) {
@@ -199,7 +199,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 	 * @param pos
 	 * @return
 	 */
-	public ItemStack getWarpItem(IBlockAccess access, BlockPos pos) {
+	public ItemStack getWarpItemStack(IBlockAccess access, BlockPos pos) {
 		Optional<TileEntityTeleporter> tile = getTeleportTileEntity(access, pos);
 		return tile.isPresent() ? tile.get().getWarpItem() : ItemStack.EMPTY;
 	}
