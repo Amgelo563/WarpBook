@@ -23,7 +23,6 @@ public class WailaTeleporterHandler implements IWailaDataProvider {
 	public List<String> getWailaBody(ItemStack itemStack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		NBTTagCompound nbtData = accessor.getNBTData();
 		
-		//Attempt to get species from server via NBT data
 		if(nbtData.hasKey("warpname")) {
 			String warpName = nbtData.getString("warpname");
 			tooltip.add(warpName);
