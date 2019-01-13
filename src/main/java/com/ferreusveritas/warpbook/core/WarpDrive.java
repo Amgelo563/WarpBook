@@ -27,7 +27,7 @@ public class WarpDrive {
 		if (!player.world.isRemote && warpItem.getItem() instanceof IDeclareWarp) {
 			Waypoint wp = ((IDeclareWarp)warpItem.getItem()).getWaypoint(player, warpItem);
 			if (wp == null) {
-				CommandUtils.showError(player, I18n.format("help.waypointnotexist"));
+				return false;
 			}
 			
 			if (player.getEntityData().hasKey(ModConstants.MODID)) {

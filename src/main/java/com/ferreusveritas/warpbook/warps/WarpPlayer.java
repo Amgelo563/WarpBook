@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WarpPlayer extends Warp {
-
+	
 	@Override
 	public String getName(World world, ItemStack stack) {
 		if (hasValidData(stack)) {

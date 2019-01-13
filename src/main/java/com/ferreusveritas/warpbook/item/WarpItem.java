@@ -22,7 +22,7 @@ public class WarpItem extends Item implements IDeclareWarp, IColorable {
 	public static final String ttprefix = "§a";
 	
 	public Warp warp = new Warp();
-	public boolean cloneable = false;;
+	public boolean cloneable = false;
 	
 	public WarpItem(String name) {
 		setUnlocalizedName(name);
