@@ -2,6 +2,7 @@ package com.ferreusveritas.warpbook.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -47,10 +48,22 @@ public class GuiBook extends GuiScreen {
 		}
 	};
 	
+	private final Supplier<ItemStack> bookBearer;
+	
 	public GuiBook(EntityPlayer entityPlayer) {
 		this.entityPlayer = entityPlayer;
+		this.bookBearer = () -> entityPlayer.getHeldItemMainhand();
 	}
-		
+	
+	public GuiBook(EntityPlayer entityPlayer, Supplier<ItemStack> bookBearer) {
+		this.entityPlayer = entityPlayer;
+		this.bookBearer = bookBearer;
+	}
+	
+	protected ItemStack procureBook() {
+		return bookBearer.get();
+	}
+	
 	@Override
 	public void initGui() {
 		Keyboard.enableRepeatEvents(true);
@@ -58,7 +71,7 @@ public class GuiBook extends GuiScreen {
 		xSize = 146;
 		ySize = 180;
 		page = 0;
-		ItemStack heldItem = entityPlayer.getHeldItemMainhand();
+		ItemStack heldItem = procureBook();
 		if (!heldItem.hasTagCompound()) {
 			heldItem.setTagCompound(new NBTTagCompound());
 		}
