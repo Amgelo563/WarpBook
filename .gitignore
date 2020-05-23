@@ -1,16 +1,10 @@
-eclipse
+# minecraft
 CREDITS-fml.txt
 forge-*-changelog.txt
 LICENSE-fml.txt
 MinecraftForge-Credits.txt
 MinecraftForge-License.txt
 README.txt
-.gradle
-build
-.classpath
-.project
-.settings
-bin
 config/
 crash-reports/
 logs/
@@ -24,7 +18,28 @@ server.properties
 white-list.txt
 world/
 *~
-run
 src/main/java/com/panicnot42/warpbook/workbench.xmi
-warpbook_Client.launch
-warpbook_Server.launch
+
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+libs

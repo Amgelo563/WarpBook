@@ -1,12 +1,11 @@
 package com.ferreusveritas.warpbook.util;
 
-import java.math.RoundingMode;
-
 import com.ferreusveritas.warpbook.WarpBook;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,11 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
 public class WarpUtils {
 
 	public static ItemStack bindItemStackToLocation(ItemStack stack, World world, EntityPlayer player) {
-		Bind(stack,
-				MathUtils.round(player.posX, RoundingMode.HALF_DOWN),
-				MathUtils.round(player.posY, RoundingMode.HALF_DOWN),
-				MathUtils.round(player.posZ, RoundingMode.HALF_DOWN),
-				player.dimension);
+		BlockPos p = player.getPosition();
+		Bind(stack, p.getX(), p.getY(),	p.getZ(), player.dimension);
 		player.openGui(WarpBook.instance, WarpBook.WarpBookWaypointGuiIndex, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		WarpBook.formingPages.put(player, stack);
 		return stack;
