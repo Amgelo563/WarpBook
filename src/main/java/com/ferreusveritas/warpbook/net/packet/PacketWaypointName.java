@@ -7,6 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -23,15 +24,17 @@ public class PacketWaypointName implements IMessage, IMessageHandler<PacketWaypo
 	
 	@Override
 	public IMessage onMessage(PacketWaypointName message, MessageContext ctx) {
-		EntityPlayer player = NetUtils.getPlayerFromContext(ctx);
-		player.getHeldItemMainhand().shrink(1);
-		if (player.getHeldItemMainhand().isEmpty()) {
-			player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
-		}
-		ItemStack newPage = WarpBook.formingPages.get(player);
-		newPage.getTagCompound().setString("name", message.name);
-		EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, newPage);
-		player.world.spawnEntity(item);
+		FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+			EntityPlayer player = NetUtils.getPlayerFromContext(ctx);
+			player.getHeldItemMainhand().shrink(1);
+			if (player.getHeldItemMainhand().isEmpty()) {
+				player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
+			}
+			ItemStack newPage = WarpBook.formingPages.get(player);
+			newPage.getTagCompound().setString("name", message.name);
+			EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, newPage);
+			player.world.spawnEntity(item);
+		});
 		return null;
 	}
 	

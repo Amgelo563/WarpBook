@@ -7,7 +7,9 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -35,10 +37,11 @@ public class PacketWarp implements IMessage, IMessageHandler<PacketWarp, IMessag
 	
 	@Override
 	public IMessage onMessage(PacketWarp message, MessageContext ctx) {
-		EntityPlayer player = NetUtils.getPlayerFromContext(ctx);
-		ItemStack page = getPageById(player, message.pageSlot);
-		WarpBook.warpDrive.queueWarp(player, page);
-		
+		FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
+			EntityPlayer player = NetUtils.getPlayerFromContext(ctx);
+			ItemStack page = getPageById(player, message.pageSlot);
+			WarpBook.warpDrive.queueWarp(player, page);
+		});
 		return null;
 	}
 	
