@@ -68,6 +68,9 @@ public class WarpBook {
 	private static int guiIndex = 42;
 	
 	public static float exhaustionCoefficient;
+	public static double minExhaustionDistance;
+	public static double maxExhaustionDistance;
+	public static float distanceCoefficient;
 	public static boolean deathPagesEnabled = true;
 	public static Integer[] disabledDestinations;
 	public static Integer[] disabledLeaving;
@@ -95,7 +98,11 @@ public class WarpBook {
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		
-		exhaustionCoefficient = (float)config.get("tweaks", "exhaustion_coefficient", 0.0f).getDouble(10.0);
+		exhaustionCoefficient = (float)config.get("tweaks", "exhaustion_coefficient", 0.0f, "factor for determining hunger penalty").getDouble(0.0);
+		distanceCoefficient = (float)config.get("tweaks", "distance_coefficient", 1 / 256.0, "hunger cost factor per block travelled via teleportation").getDouble(0.0);
+		minExhaustionDistance = config.get("tweaks", "min_exhaustion_distance", 256.0, "minimum distance of hunger penalty factor").getDouble(256.0);
+		maxExhaustionDistance = config.get("tweaks", "max_exhaustion_distance", 16384.0, "maximum distance of hunger penalty factor").getDouble(16384.0);
+
 		deathPagesEnabled = config.get("features", "death_pages", true).getBoolean(true);
 		int[] disabledDestinationsP = config.get("features", "disabled_destination_dimensions", new int[] {}).getIntList();
 		int[] disabledLeavingP = config.get("features", "disabled_departing_dimensions", new int[] {}).getIntList();

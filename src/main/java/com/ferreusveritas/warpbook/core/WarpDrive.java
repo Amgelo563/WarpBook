@@ -16,6 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.SPacketSetExperience;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.Teleporter;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -69,27 +71,45 @@ public class WarpDrive {
 			}
 			
 			if (player.isServerWorld()) {
-				player.getServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, wp.dim, new Teleporter(((EntityPlayerMP) player).getServerWorld()) {
+				EntityPlayerMP mpPlayer = (EntityPlayerMP) player;
+				
+				player.getServer().getPlayerList().transferPlayerToDimension(mpPlayer, wp.dim, new Teleporter((mpPlayer).getServerWorld()) {
 					@Override public void placeInPortal(Entity entityIn, float rotationYaw) { }
 					@Override public boolean placeInExistingPortal(Entity entityIn, float rotationYaw) { return true; }
 					@Override public boolean makePortal(Entity entityIn) { return true; }
 					@Override public void removeStalePortalLocations(long worldTime) { }
 				});
 				
+				//Update client player with experience information
+				mpPlayer.connection.sendPacket(new SPacketSetExperience(mpPlayer.experience, mpPlayer.experienceTotal, mpPlayer.experienceLevel));
 			}
 		}
 		
+		double dx = newPoint.x - oldPoint.x;
+		double dy = newPoint.y - oldPoint.y;
+		double dz = newPoint.z - oldPoint.z;
+		double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+		
+		if(crossDim) {
+			distance = Double.POSITIVE_INFINITY;
+		}
+		
 		//Update player
-		player.addExhaustion(calculateExhaustion(player.getEntityWorld().getDifficulty(), WarpBook.exhaustionCoefficient, crossDim));
+		player.addExhaustion(calculateExhaustion(player.getEntityWorld().getDifficulty(), distance));
 		player.setPositionAndUpdate(wp.x + 0.5, wp.y + 0.5, wp.z + 0.5);
-
+		
 		//Send effect packets
 		WarpBook.network.sendToAllAround(oldDim, oldPoint);
 		WarpBook.network.sendToAllAround(newDim, newPoint);
 	}
 
-	private static float calculateExhaustion(EnumDifficulty difficultySetting, float exhaustionCoefficient, boolean crossDim) {
+	private static float calculateExhaustion(EnumDifficulty difficultySetting, double distance) {
+		
+		distance = (float) MathHelper.clamp(distance, WarpBook.minExhaustionDistance, WarpBook.maxExhaustionDistance);
+		float distanceFactor = (float)(distance * WarpBook.distanceCoefficient);
+		
 		float scaleFactor = 0.0f;
+		
 		switch (difficultySetting) {
 		case EASY:
 			scaleFactor = 1.0f;
@@ -104,7 +124,8 @@ public class WarpDrive {
 			scaleFactor = 0.0f;
 			break;
 		}
-		return exhaustionCoefficient * scaleFactor * (crossDim ? 2.0f : 1.0f);
+		
+		return WarpBook.exhaustionCoefficient * scaleFactor * distanceFactor;
 	}
 	
 }
