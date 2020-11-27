@@ -73,17 +73,21 @@ public class WarpBookColorShapeless extends ShapelessRecipes {
 	}
 	
 	private EnumDyeColor getItemDyeColor(ItemStack stack) {
-		String[] dyes = { "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "LightGray",
-			"Gray", "Pink", "Lime", "Yellow", "LightBlue", "Magenta", "Orange", "White"
-        };
 		
-		int[] oreIds = OreDictionary.getOreIDs(stack);
-		
-		for(int oreId : oreIds) {
-			String oreName = OreDictionary.getOreName(oreId);
-			for(int dye = 0; dye < 16; dye++) {
-				if( oreName.equals("dye" + dyes[dye]) ) {
-					return EnumDyeColor.values()[dye];
+		if(!stack.isEmpty()) {
+			
+			String[] dyes = { "Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "LightGray",
+					"Gray", "Pink", "Lime", "Yellow", "LightBlue", "Magenta", "Orange", "White"
+			};
+			
+			int[] oreIds = OreDictionary.getOreIDs(stack);
+			
+			for(int oreId : oreIds) {
+				String oreName = OreDictionary.getOreName(oreId);
+				for(int dye = 0; dye < 16; dye++) {
+					if( oreName.equals("dye" + dyes[dye]) ) {
+						return EnumDyeColor.byDyeDamage(dye);
+					}
 				}
 			}
 		}
