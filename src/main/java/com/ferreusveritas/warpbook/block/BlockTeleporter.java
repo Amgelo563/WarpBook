@@ -41,7 +41,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTeleporter extends Block implements ITileEntityProvider, IColorableBlock {
 	protected static final AxisAlignedBB TELEPORTER_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 4.0D / 16.0D, 1.0D);
-	
+
 	public BlockTeleporter() {
 		super(Material.IRON);
 		setUnlocalizedName("teleporter");
@@ -52,12 +52,12 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		setResistance(20.0f);
 		setHarvestLevel("pickaxe", 2);
 	}
-	
+
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileEntityTeleporter();
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!player.isSneaking()) {
@@ -67,23 +67,27 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 				ItemStack heldItemStack = player.getHeldItem(hand);
 				if(player.canPlayerEdit(pos, facing, heldItemStack)) {
 					Item heldItem = heldItemStack.getItem();
-					if (!heldItemStack.isEmpty()) {
-						if(heldItem instanceof WarpPotionItem && !(heldItem instanceof UnboundWarpPotionItem) ) {
-							teleporter.get().setWarpItem(player.getHeldItem(hand));
-							if(!player.isCreative()) {
-								if (player.getHeldItem(hand).getCount() < 1) {
+					if(!teleporter.get().isLocked()) {
+						if (!heldItemStack.isEmpty()) {
+							if(heldItem == Items.IRON_INGOT) {
+								teleporter.get().lock();
+								if(!player.isCreative()) {
 									player.getHeldItem(hand).shrink(1);
 								}
-								else {
-									player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
-								}
-								player.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
 							}
-						} else
-						if(heldItem == Items.WATER_BUCKET) {
-							teleporter.get().setWarpItem(ItemStack.EMPTY);
-						} else {
-							return false;
+							else if(heldItem instanceof WarpPotionItem && !(heldItem instanceof UnboundWarpPotionItem) ) {
+								teleporter.get().setWarpItem(player.getHeldItem(hand));
+								if(!player.isCreative()) {
+									//Only potions can be used in the teleporter and they don't stack
+									player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
+									//Once the potion is emptied into the teleporter pad it's an empty bottle
+									player.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+								}
+							} else if(heldItem != Items.WATER_BUCKET) {
+								teleporter.get().setWarpItem(ItemStack.EMPTY);
+							} else {
+								return false;
+							}
 						}
 					}
 				}
@@ -93,20 +97,23 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if (entityIn instanceof EntityPlayer && !worldIn.isBlockPowered(pos) ) {
-			Optional<TileEntityTeleporter> tile = getTeleportTileEntity(worldIn, pos);
-			if(tile.isPresent()) {
-				ItemStack page = tile.get().getWarpItem();
-				if (!page.isEmpty()) {
-					WarpBook.warpDrive.queueWarp((EntityPlayer)entityIn, page);
+		if (entityIn instanceof EntityPlayer && !worldIn.isBlockPowered(pos)) {
+			EntityPlayer player = (EntityPlayer) entityIn;
+			if(!player.isSneaking()) {
+				Optional<TileEntityTeleporter> tile = getTeleportTileEntity(worldIn, pos);
+				if(tile.isPresent()) {
+					ItemStack page = tile.get().getWarpItem();
+					if (!page.isEmpty()) {
+						WarpBook.warpDrive.queueWarp((EntityPlayer)entityIn, page);
+					}
 				}
 			}
 		}
 	}
-	
+
 	protected Optional<TileEntityTeleporter> getTeleportTileEntity(IBlockAccess access, BlockPos pos) {
 		TileEntity tile = access.getTileEntity(pos);
 		if(tile instanceof TileEntityTeleporter) {
@@ -114,29 +121,29 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		}
 		return Optional.empty();
 	}
-	
+
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return TELEPORTER_AABB;
 	}
-	
+
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
 		if (willHarvest) return true; //If it will harvest, delay deletion of the block until after getDrops
 		return super.removedByPlayer(state, world, pos, player, willHarvest);
 	}
-	
+
 	@Override
 	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack tool) {
 		super.harvestBlock(world, player, pos, state, te, tool);
 		world.setBlockToAir(pos);
 	}
-	
+
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess access, BlockPos pos, IBlockState state, int fortune) {
 		ItemStack stack = new ItemStack(this, 1, 0);
 		NBTTagCompound tag = getNBT(stack);
-		
+
 		ItemStack warpItem = getWarpItemStack(access, pos);
 		if(!warpItem.isEmpty()) {
 			NBTTagCompound warpTag = warpItem.serializeNBT();
@@ -145,18 +152,18 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 				stack.setTagCompound(tag);
 			}
 		}
-		
+
 		drops.add(stack);
 	}
-	
+
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		return getWarpEncodedItemStack(world, pos);
 	}
-	
+
 	protected ItemStack getWarpEncodedItemStack(IBlockAccess access, BlockPos pos) {
 		ItemStack stack = new ItemStack(this, 1, 0);
-		
+
 		ItemStack warpItem = getWarpItemStack(access, pos);
 		if(!warpItem.isEmpty()) {
 			NBTTagCompound warpTag = warpItem.serializeNBT();
@@ -166,18 +173,18 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 				stack.setTagCompound(tag);
 			}
 		}
-		
+
 		return stack;
 	}
-	
+
 	public NBTTagCompound getNBT(ItemStack itemStack) {
 		return itemStack.hasTagCompound() ? itemStack.getTagCompound() : new NBTTagCompound();
 	}
-	
+
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
-		
+
 		if(!stack.isEmpty()) {
 			ItemStack warpStack = getWarpItemStack(stack);
 			if(!warpStack.isEmpty()) {
@@ -187,13 +194,13 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 				}
 			}
 		}
-	
-		
+
+
 	}
-	
+
 	/**
- 	 * Retrieves the contained itemStack that is presumably a warp item from the tile entity in the
- 	 * world.
+	 * Retrieves the contained itemStack that is presumably a warp item from the tile entity in the
+	 * world.
 	 * 
 	 * @param access
 	 * @param pos
@@ -203,7 +210,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 		Optional<TileEntityTeleporter> tile = getTeleportTileEntity(access, pos);
 		return tile.isPresent() ? tile.get().getWarpItem() : ItemStack.EMPTY;
 	}
-	
+
 	/**
 	 * Retrieves the contained itemStack that is presumably a warp item from an ItemStack.
 	 * 
@@ -222,64 +229,64 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 				}
 			}
 		}
-		
+
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColor(IBlockState state, IBlockAccess access, BlockPos pos, int tintIndex) {
-		
+
 		Optional<TileEntityTeleporter> tile = getTeleportTileEntity(access, pos);
 		if(tile.isPresent()) {
 			WarpColors wc = tile.get().getWarpColor();
-			
+
 			if(wc == WarpColors.UNBOUND) {
 				return 0xFF888888;
 			}
-			
+
 			switch (tintIndex) {
-				default: return 0xFFFFFFFF;
-				case 0: return wc.getColor(); //Base color
-				case 1: return wc.getSpecColor(); //Specular color
+			default: return 0xFFFFFFFF;
+			case 0: return wc.getColor(); //Base color
+			case 1: return wc.getSpecColor(); //Specular color
 			}
 		}
-		
+
 		return 0xFFFFFFFF;
 	}
-	
+
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		if(face == EnumFacing.DOWN) {
 			return BlockFaceShape.SOLID;
 		}
-		
+
 		return BlockFaceShape.UNDEFINED;
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
 		super.addInformation(stack, world, tooltip, advanced);
-		
+
 		ItemStack warpItemStack = getWarpItemStack(stack);
-		
+
 		String destName = "§4§kUnbound";
-		
+
 		if(!warpItemStack.isEmpty()) {
 			Item item = warpItemStack.getItem();
 			if(item instanceof WarpItem) {
@@ -287,7 +294,7 @@ public class BlockTeleporter extends Block implements ITileEntityProvider, IColo
 				destName = "§a" + warpItem.getName(world, warpItemStack);
 			}
 		}
-		
+
 		tooltip.add(destName);
 	}
 }

@@ -11,11 +11,13 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityTeleporter extends TileEntity {
-	ItemStack warpItem;
+	private ItemStack warpItem;
+	private boolean locked;
 	
 	public TileEntityTeleporter() {
 		warpItem = ItemStack.EMPTY;
@@ -54,6 +56,9 @@ public class TileEntityTeleporter extends TileEntity {
 	
 	private void read(NBTTagCompound tag) {
 		warpItem = new ItemStack(tag.getCompoundTag("warpitem"));
+		if(tag.hasKey("locked", NBT.TAG_BYTE)) {
+			locked = tag.getByte("locked") != 0;
+		}
 	}
 	
 	private void write(NBTTagCompound tag) {
@@ -61,6 +66,7 @@ public class TileEntityTeleporter extends TileEntity {
 			NBTTagCompound pageTag = new NBTTagCompound();
 			warpItem.writeToNBT(pageTag);
 			tag.setTag("warpitem", pageTag);
+			tag.setByte("locked", (byte)(locked ? 1 : 0));
 		}
 	}
 	
@@ -71,6 +77,14 @@ public class TileEntityTeleporter extends TileEntity {
 	public void setWarpItem(ItemStack stack) {
 		warpItem = stack;
 		markDirty();
+	}
+	
+	public boolean isLocked() {
+		return locked;
+	}
+	
+	public void lock() {
+		locked = true;
 	}
 	
 	@Override
