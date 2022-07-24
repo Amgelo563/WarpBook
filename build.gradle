@@ -36,7 +36,8 @@ minecraft {
 }
 
 dependencies {
-    //compile "mcp.mobius.waila:Hwyla:+"
+	// Used for HWYLA and Antique Atlas
+	compileOnly fileTree(dir:'libs', includes:['*.jar'])
 }
 
 processResources {

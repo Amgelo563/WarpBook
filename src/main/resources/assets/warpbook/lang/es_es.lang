@@ -1,0 +1,38 @@
+item.warpbook.name=Warp Book
+item.unboundwarppage.name=Página de teletransporte desvinculada
+item.boundwarppage.name=Página de teletransporte vinculada
+item.hyperwarppage.name=Super página de teletransporte
+item.playerwarppage.name=Página de teletransporte a jugador
+item.deathlywarppage.name=Página de teletransporte mortífera
+item.warppage.name=Página de teletransporte legacy
+item.unboundwarppotion.name=Poción de teletransporte desvinculada
+item.boundwarppotion.name=Poción de teletransporte vinculada
+item.warpcluster.name=Cúmulo teletransportador
+item.playerwarppotion.name=Poción de teletransporte a jugador
+item.hyperwarppotion.name=Super poción de teletransporte
+
+itemGroup.tabWarpBook=Warp Book
+
+tile.teleporter.name=Teletransportador
+tile.bookcloner.name=Clonador de Warp Book
+
+warpbook.dowarp=Ir a punto
+warpbook.bindpage=Vincular página
+warpbook.namewaypoint=Ingresa el nombre del punto
+warpbook.booktooltip=%d/54 páginas
+warpbook.name=Warp Book
+warpbook.bindmsg=Vinculada a (%.0f, %.0f, %.0f) en dimensión %d
+
+help.nopages=No hay páginas en este libro. Usa shift + click derecho para añadir páginas vinculadas
+help.nowaypointsfound=Sin puntos encontrados
+help.noplayerspecified=Debes especificar el nombre de un usuario
+help.waypointdoesnotexist=El punto '%s' no existe
+help.waypointdelete=¡Poof!
+help.notawaypoint='%s' no es un punto
+help.waypointcreated=Punto creado
+help.selfaport=¡Felicidades! Te has teletransportado hacia ti mismo
+help.legacy=Click derecho para actualizar
+help.cantgoto=Algo está evitando que vayas ahí
+help.cantleave=Algo está evitando que salgas de aquí
+
+bookcloner.name=Clonador de Warp Book

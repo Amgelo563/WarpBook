@@ -4,6 +4,7 @@ import com.ferreusveritas.warpbook.Proxy;
 import com.ferreusveritas.warpbook.WarpBook;
 import com.ferreusveritas.warpbook.item.IColorable;
 
+import com.ferreusveritas.warpbook.compat.AntiqueAtlasCompat;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -55,6 +56,9 @@ public class ClientProxy extends Proxy {
 				}
 				, new Block[] {WarpBook.blocks.teleporter}
 			);
+		if (WarpBook.antiqueAtlasCompat) {
+			AntiqueAtlasCompat.registerTexture();
+		}
 	}
 	
 	private void regMesh(Item item) {

@@ -1,5 +1,7 @@
 package com.ferreusveritas.warpbook;
 
+import static com.ferreusveritas.warpbook.compat.AntiqueAtlasCompat.ANTIQUE_ATLAS_ID;
+
 import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +36,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -53,20 +56,20 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class WarpBook {
 	@Mod.Instance(value = ModConstants.MODID)
 	public static WarpBook instance;
-	
+
 	public static final Logger logger = LogManager.getLogger(ModConstants.MODID);
 	public static final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(ModConstants.MODID);
-	
+
 	@SidedProxy(clientSide = "com.ferreusveritas.warpbook.client.ClientProxy", serverSide = "com.ferreusveritas.warpbook.Proxy")
 	public static Proxy proxy;
-	
+
 	public static WarpDrive warpDrive = new WarpDrive();
 	public static ModItems items;
 	public static ModBlocks blocks;
 	public static Crafting crafting;
-	
+
 	private static int guiIndex = 42;
-	
+
 	public static float exhaustionCoefficient;
 	public static double minExhaustionDistance;
 	public static double maxExhaustionDistance;
@@ -74,17 +77,19 @@ public class WarpBook {
 	public static boolean deathPagesEnabled = true;
 	public static Integer[] disabledDestinations;
 	public static Integer[] disabledLeaving;
-	
+
+	public static Boolean antiqueAtlasCompat;
+
 	public static final int WarpBookWarpGuiIndex = guiIndex++;
 	public static final int WarpBookWaypointGuiIndex = guiIndex++;
 	public static final int WarpBookInventoryGuiIndex = guiIndex++;
 	public static final int BookClonerInventoryGuiIndex = guiIndex++;
-	
+
 	public static HashMap<EntityPlayer, ItemStack> lastHeldBooks = new HashMap<EntityPlayer, ItemStack>();
 	public static HashMap<EntityPlayer, ItemStack> formingPages = new HashMap<EntityPlayer, ItemStack>();
-	
+
 	private static Configuration config;
-	
+
 	public static CreativeTabs tabBook = new CreativeTabs("tabWarpBook") {
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -92,12 +97,12 @@ public class WarpBook {
 			return new ItemStack(items.warpBookItem);
 		}
 	};
-	
+
 	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {		
+	public void preInit(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		
+
 		exhaustionCoefficient = (float)config.get("tweaks", "exhaustion_coefficient", 0.0f, "factor for determining hunger penalty").getDouble(0.0);
 		distanceCoefficient = (float)config.get("tweaks", "distance_coefficient", 1 / 256.0, "hunger cost factor per block travelled via teleportation").getDouble(0.0);
 		minExhaustionDistance = config.get("tweaks", "min_exhaustion_distance", 256.0, "minimum distance of hunger penalty factor").getDouble(256.0);
@@ -114,7 +119,12 @@ public class WarpBook {
 		for (int i = 0; i < disabledLeavingP.length; ++i) {
 			disabledLeaving[i] = disabledLeavingP[i];
 		}
-		
+
+		antiqueAtlasCompat = (
+				config.get("features", "antique_atlas_compatibility", true, "(Antique Atlas) Whether to create a new marker on every Atlas when creating a waypoint.").getBoolean(true)
+				&& Loader.isModLoaded(ANTIQUE_ATLAS_ID)
+		);
+
 		items = new ModItems();
 		blocks = new ModBlocks();
 		crafting = new Crafting();

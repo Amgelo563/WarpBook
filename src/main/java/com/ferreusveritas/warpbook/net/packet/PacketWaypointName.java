@@ -1,6 +1,7 @@
 package com.ferreusveritas.warpbook.net.packet;
 
 import com.ferreusveritas.warpbook.WarpBook;
+import com.ferreusveritas.warpbook.compat.AntiqueAtlasCompat;
 import com.ferreusveritas.warpbook.util.net.NetUtils;
 
 import io.netty.buffer.ByteBuf;
@@ -34,6 +35,8 @@ public class PacketWaypointName implements IMessage, IMessageHandler<PacketWaypo
 			newPage.getTagCompound().setString("name", message.name);
 			EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, newPage);
 			player.world.spawnEntity(item);
+
+			if (WarpBook.antiqueAtlasCompat) AntiqueAtlasCompat.addMarker(player, message.name);
 		});
 		return null;
 	}
